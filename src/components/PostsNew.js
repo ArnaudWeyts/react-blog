@@ -1,7 +1,23 @@
 import React from 'react';
 import {Field, reduxForm} from 'redux-form';
+import {connect} from 'react-redux';
 import {createPost} from '../actions/index';
 import {Link, browserHistory} from 'react-router';
+
+// Validates the form
+const validate = values => {
+  const errors = {};
+  if (!values.title) {
+    errors.title = 'Required';
+  }
+  if (!values.categories) {
+    errors.categories = 'Required';
+  }
+  if (!values.content) {
+    errors.content = 'Required';
+  }
+  return errors;
+};
 
 // renderField, changed to support type=textarea
 const renderField = ({ input, label, type, meta: { touched, error } }) => (
@@ -19,13 +35,16 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
   </div>
 );
 
-const onSubmit = (props) => {
-  createPost(props);
-  browserHistory.push('/');
-};
-
 const PostsNew = (props) => {
-  const {handleSubmit, submitting} = props;
+  const {handleSubmit, submitting, createPost} = props;
+
+  const onSubmit = (values) => {
+    createPost(values)
+    .then(() => {
+      browserHistory.push('/');
+    });
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <h3>Create a new post</h3>
@@ -40,22 +59,9 @@ const PostsNew = (props) => {
   );
 }
 
-// Validates the form
-const validate = values => {
-  const errors = {};
-  if (!values.title) {
-    errors.title = 'Required';
-  }
-  if (!values.categories) {
-    errors.categories = 'Required';
-  }
-  if (!values.content) {
-    errors.content = 'Required';
-  }
-  return errors;
-};
-
-export default reduxForm({
+const PostsNewForm = reduxForm({
   form: 'PostsNewForm',
   validate
 })(PostsNew);
+
+export default connect(null, {createPost})(PostsNewForm);
