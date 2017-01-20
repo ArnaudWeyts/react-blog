@@ -1,7 +1,24 @@
 .container {
   max-width: 960px;
+  padding-top: 20px;
 }
 
 .alert {
   margin-top: 20px;
+}
+
+h2 {
+  display: inline-block;
+}
+
+h3 {
+  margin-top: 20px;
+}
+
+.blog-title {
+  flex-grow: 1;
+}
+
+form a {
+  margin-left: 10px;
 }
