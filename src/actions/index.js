@@ -26,7 +26,6 @@ export function fetchPosts() {
 
 export function createPost(props) {
   const url = `${ROOT_URL}/posts${API_KEY}`;
-  console.log(JSON.stringify(props));
   const request = fetch(url, {
     method: 'POST',
     headers: {
