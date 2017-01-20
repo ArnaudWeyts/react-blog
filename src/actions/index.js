@@ -32,7 +32,7 @@ export function createPost(props) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(props)
-  });
+  })
 
   return {
     type: CREATE_POST,
